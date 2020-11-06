@@ -11,4 +11,8 @@ class Post {
       this.title,
       this.categoryName,
       this.author});
+
+  @override
+  String toString() =>
+      'Title: $title\nCategory: $categoryName\nAuthor: $author\nUrl: $contentUrl\nImageUrl: $imageUrl';
 }
