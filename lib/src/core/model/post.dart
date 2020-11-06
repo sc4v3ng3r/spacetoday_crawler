@@ -1,16 +1,19 @@
-class Post {
-  final String contentUrl;
-  final String imageUrl;
-  final String title;
-  final String categoryName;
-  final String author;
+import './abstract_post.dart';
 
+class Post extends AbstractPost {
+  final String author;
   Post(
-      {this.contentUrl,
-      this.imageUrl,
-      this.title,
-      this.categoryName,
-      this.author});
+      {String contentUrl,
+      String imageUrl,
+      String title,
+      String categoryName,
+      this.author})
+      : super(
+          contentUrl: contentUrl,
+          imageUrl: imageUrl,
+          title: title,
+          categoryName: categoryName,
+        );
 
   @override
   String toString() =>
