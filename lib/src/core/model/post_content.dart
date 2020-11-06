@@ -1,7 +1,7 @@
 import './content_data.dart';
 
 class PostContent {
-  final String postImage;
+  final String postHeaderImage;
   final String title;
   final String categoryName;
   final String categoryUrl;
@@ -10,7 +10,7 @@ class PostContent {
   final List<ContentData> contents;
 
   PostContent(
-      {this.postImage,
+      {this.postHeaderImage,
       this.title,
       this.categoryName,
       this.categoryUrl,

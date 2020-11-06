@@ -15,7 +15,7 @@ class PostContentParser implements IHtmlParser<PostContent> {
       final sidebarDiv =
           contentPageDiv.getElementsByClassName('sidebarPage').first;
 
-      final mainImageUrl = _extractMainImageUrl(document);
+      final headerImageUrl = _extractHeaderImageUrl(document);
       final postTitle = _extractTitle(document);
       final categoryName = _extractCategoryName(sidebarDiv);
       final categoryUrl = _extractCategoryUrl(sidebarDiv);
@@ -29,7 +29,7 @@ class PostContentParser implements IHtmlParser<PostContent> {
         categoryName: categoryName,
         categoryUrl: categoryUrl,
         date: date,
-        postImage: mainImageUrl,
+        postHeaderImage: headerImageUrl,
         title: postTitle,
         contents: content,
       );
@@ -95,7 +95,7 @@ class PostContentParser implements IHtmlParser<PostContent> {
     return data;
   }
 
-  String _extractMainImageUrl(Document document) {
+  String _extractHeaderImageUrl(Document document) {
     String imageUrl;
     try {
       final imageDiv = document.getElementById('imagemPage');
