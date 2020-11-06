@@ -8,6 +8,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  html: ^0.14.0+4
 
 dev_dependencies:
   test: ^1.15.4
