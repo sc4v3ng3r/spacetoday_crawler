@@ -1,5 +1,5 @@
+import 'package:spacetoday_crawler/src/core/model/exception.dart';
 import 'package:spacetoday_crawler/src/core/model/post.dart';
-import 'package:spacetoday_crawler/src/core/parser/IHtmlParser.dart';
 import 'package:spacetoday_crawler/src/core/parser/post_parser.dart';
 import 'package:test/test.dart';
 
@@ -18,19 +18,21 @@ void main() {
 
     expect(posts != null, true);
     expect(posts.isNotEmpty, true);
-    expect(posts.length == 12, true);
   });
 
   test('Testing Success PostParser with CategoryPage', () {
     List<Post> posts = parser.parse(categoryPage);
     expect(posts != null, true);
     expect(posts.isNotEmpty, true);
-    expect(posts.length == 9, true);
   });
 
   test('Testing with empty category page', () {
     List<Post> posts = parser.parse(emptyCategoryPage);
     print(posts);
     expect(posts.isEmpty, true);
+  });
+
+  test("Testing parse failure throwing ParserException", () {
+    expect(() => parser.parse(null), throwsA(TypeMatcher<ParserException>()));
   });
 }

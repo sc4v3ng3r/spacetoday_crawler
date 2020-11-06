@@ -1,3 +1,4 @@
+import 'package:spacetoday_crawler/src/core/model/exception.dart';
 import '../model/post.dart';
 import 'IHtmlParser.dart';
 import 'package:html/parser.dart' as htmlParser show parse;
@@ -10,12 +11,16 @@ import 'package:html/dom.dart';
 class PostParser implements IHtmlParser<List<Post>> {
   @override
   List<Post> parse(String html) {
-    final document = htmlParser.parse(
-      html,
-    );
-
-    final loopBlog = document.getElementById('loopBlog');
-    return _postsExtractor(loopBlog);
+    try {
+      final document = htmlParser.parse(
+        html,
+      );
+      final loopBlog = document.getElementById('loopBlog');
+      return _postsExtractor(loopBlog);
+    } catch (_) {
+      throw ParserException(
+          message: "PostParser::parse Wasn't parse this post");
+    }
   }
 
   List<Post> _postsExtractor(final Element loopBlogElement) {
@@ -24,10 +29,7 @@ class PostParser implements IHtmlParser<List<Post>> {
     return articles.map((element) {
       try {
         return _postExtractor(element);
-      } catch (_) {
-        print(
-            "Was not possible parse an element in PostParser::postsExtractor $_");
-      }
+      } catch (_) {}
     }).toList();
   }
 
@@ -67,7 +69,7 @@ class PostParser implements IHtmlParser<List<Post>> {
           ?.first;
       return categoryAnchor?.text;
     } catch (_) {
-      print("PostParser::_extractCategoryName couldn't find category name");
+      // print("PostParser::_extractCategoryName couldn't find category name");
     }
     return "";
   }
@@ -82,7 +84,7 @@ class PostParser implements IHtmlParser<List<Post>> {
       final img = thumbAnchor?.getElementsByTagName('img')?.first;
       return img?.attributes["src"] ?? null;
     } catch (ex) {
-      print("PostParser::_extractImageUrl couldn't find image url");
+      // print("PostParser::_extractImageUrl couldn't find image url");
     }
 
     return null;
@@ -97,9 +99,9 @@ class PostParser implements IHtmlParser<List<Post>> {
           ?.first;
       return titleAnchor?.text ?? "";
     } catch (ex) {
-      print("PostParser::_extractTitle couldn't find title");
+      throw ParserException(
+          message: "PostParser::_extractTitle couldn't find title");
     }
-    return "";
   }
 
   String _extractAuthor(Element element) {
@@ -111,7 +113,7 @@ class PostParser implements IHtmlParser<List<Post>> {
           ?.first
           ?.text;
     } catch (ex) {
-      print("PostParser::_extractAuthor couldn't find author");
+      // print("PostParser::_extractAuthor couldn't find author");
     }
     return "";
   }
@@ -125,9 +127,10 @@ class PostParser implements IHtmlParser<List<Post>> {
           ?.first
           ?.attributes["href"];
     } catch (ex) {
-      print("PostParser::_extractPostContentUrl couldn't find content url");
+      throw ParserException(
+          message:
+              "PostParser::_extractPostContentUrl couldn't find content url");
     }
-    return null;
   }
 // <div class="categoryPost" id="space-today-tv">
 //  <ul class="post-categories">
