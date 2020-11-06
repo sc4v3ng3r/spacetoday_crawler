@@ -88,6 +88,7 @@ class PostContentParser implements IHtmlParser<PostContent> {
           break;
         default:
           data = ContentData(data: element.text, type: ContentType.TEXT);
+          break;
       }
     });
 
