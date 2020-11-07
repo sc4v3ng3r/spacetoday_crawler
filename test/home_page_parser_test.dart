@@ -16,6 +16,11 @@ main() {
     homePageParser = HomePageParser(postsParser);
   });
 
+  tearDown(() {
+    homePageParser = null;
+    postsParser = null;
+  });
+
   test('Testing HomePageParser success with HomePage data', () {
     final data = homePageParser.parse(homePage);
 
@@ -29,10 +34,5 @@ main() {
   test('Testing HomePageParser failure throwing ParserException', () {
     expect(() => homePageParser.parse(null),
         throwsA(TypeMatcher<ParserException>()));
-  });
-
-  tearDown(() {
-    homePageParser = null;
-    postsParser = null;
   });
 }

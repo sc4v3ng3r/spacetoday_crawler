@@ -13,6 +13,8 @@ void main() {
     parser = PostParser();
   });
 
+  tearDown(() => parser = null);
+
   test('Testing success PostParser with HomePage', () {
     List<Post> posts = parser.parse(homePage);
 
@@ -28,7 +30,6 @@ void main() {
 
   test('Testing with empty category page', () {
     List<Post> posts = parser.parse(emptyCategoryPage);
-    print(posts);
     expect(posts.isEmpty, true);
   });
 

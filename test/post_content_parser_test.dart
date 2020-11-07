@@ -14,6 +14,8 @@ main() {
     parser = PostContentParser();
   });
 
+  tearDown(() => parser = null);
+
   test("Testing PostContentParser success in page content with video", () {
     final data = parser.parse(contentPageWithVideo);
     expect(data, isA<PostContent>());
