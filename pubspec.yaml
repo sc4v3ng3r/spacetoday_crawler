@@ -1,6 +1,6 @@
 name: spacetoday_crawler
 description: A new Flutter package.
-version: 0.0.1
+version: 0.1.0
 author:
 homepage:
 
@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   html: ^0.14.0+4
+  dio: ^3.0.10
 
 dev_dependencies:
   test: ^1.15.4
+  mockito: ^4.1.3
