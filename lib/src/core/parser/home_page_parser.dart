@@ -1,3 +1,4 @@
+import '../model/category.dart';
 import '../model/exception.dart';
 import '../model/home_page.dart';
 import '../model/most_readed_data.dart';
@@ -45,7 +46,7 @@ class HomePageParser implements IHtmlParser<HomePage> {
     return [];
   }
 
-  List<String> _extractCategories(Document document) {
+  List<Category> _extractCategories(Document document) {
     try {
       final categoryElements = document
           .getElementById('cssmenu')
@@ -53,7 +54,8 @@ class HomePageParser implements IHtmlParser<HomePage> {
           .first
           .getElementsByClassName('menu-item-object-category');
       return categoryElements.map((e) {
-        return e.getElementsByTagName('a').first.text;
+        final categoryAnchor = e.getElementsByTagName('a').first;
+        return Category(categoryAnchor.text, categoryAnchor.attributes['href']);
       }).toList();
     } catch (_) {}
     return [];
