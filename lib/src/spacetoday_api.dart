@@ -9,12 +9,12 @@ import 'core/model/post.dart';
 import 'core/model/search_result.dart';
 
 class SpaceTodayApi {
-  final Dio client;
+  final Dio dioClient;
 
-  SpaceTodayApi(this.client);
+  SpaceTodayApi(this.dioClient);
 
   Future<HomePage> getHomePage() async {
-    final response = await this.client.get(
+    final response = await this.dioClient.get(
           SpaceTodayPath.basePath,
         );
     return HomePageParser(PostParser()).parse(response.data);
@@ -23,13 +23,13 @@ class SpaceTodayApi {
   Future<List<Post>> getCategoryPosts(final String url, {int page = 1}) async {
     if (page < 0) page = 1;
     final _url = _formatToPage(url, page);
-    final response = await this.client.get(_url);
+    final response = await this.dioClient.get(_url);
     return PostParser().parse(response.data);
   }
 
   Future<List<SearchResult>> search(final String search) async {
     final url = SpaceTodayPath.basePath + "?s=${_formatSearchQuery(search)}";
-    final response = await this.client.get(
+    final response = await this.dioClient.get(
           url,
         );
 
@@ -38,7 +38,7 @@ class SpaceTodayApi {
   }
 
   Future<PostContent> getPostContent(final String contentUrl) async {
-    final response = await this.client.get(contentUrl);
+    final response = await this.dioClient.get(contentUrl);
     return PostContentParser().parse(response.data);
   }
 
