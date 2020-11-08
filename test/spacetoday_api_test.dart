@@ -216,7 +216,7 @@ main() {
       when(client.get(categoryUrl)).thenThrow(DioError());
       expect(
           () => api.getCategoryPosts(
-                categoryUrl,
+                "https://spacetoday.com.br/category/categoryUrl/",
               ),
           throwsA(TypeMatcher<DioError>()));
     });
