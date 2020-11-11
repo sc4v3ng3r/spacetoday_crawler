@@ -49,6 +49,19 @@ main() {
       expect(data.mostReaded.isNotEmpty, true);
     });
 
+    test('Testing api.getHomePage() paging success with HomePage data',
+        () async {
+      when(client.get(
+        "https://spacetoday.com.br/page/2/",
+      )).thenAnswer((_) async => responseWithSuccess);
+
+      final data = await api.getHomePage(page: 2);
+      expect(data, isA<HomePage>());
+      expect(data.posts.isNotEmpty, true);
+      expect(data.categories.isNotEmpty, true);
+      expect(data.mostReaded.isNotEmpty, true);
+    });
+
     test('Testing api.getHomePage() failure throwing DioError', () async {
       when(client.get<String>(
         SpaceTodayPath.basePath,

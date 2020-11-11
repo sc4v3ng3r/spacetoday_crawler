@@ -13,9 +13,11 @@ class SpaceTodayApi {
 
   SpaceTodayApi(this.dioClient);
 
-  Future<HomePage> getHomePage() async {
+  Future<HomePage> getHomePage({int page = 1}) async {
     final response = await this.dioClient.get(
-          SpaceTodayPath.basePath,
+          (page <= 0 || page == 1)
+              ? SpaceTodayPath.basePath
+              : _formatToPage(SpaceTodayPath.basePath, page),
         );
     return HomePageParser(PostParser()).parse(response.data);
   }
