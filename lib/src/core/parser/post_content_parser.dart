@@ -44,14 +44,14 @@ class PostContentParser implements IHtmlParser<PostContent> {
     final contentDiv = contentPageDiv.getElementsByClassName("content").first;
     final videoContentList = _extractVideoContent(contentDiv);
 
-    final elements = contentDiv.getElementsByTagName('p');
+    final paragraphs = contentDiv.getElementsByTagName('p');
 
-    final postContents = elements.map((e) {
-      if (e.children.isNotEmpty) {
-        return _extractWithInternalContent(e);
+    final postContents = paragraphs.map((p) {
+      if (p.children.isNotEmpty) {
+        return _extractWithInternalContent(p);
       } else
         return ContentData(
-          data: e.text,
+          data: p.text.trim(),
           type: ContentType.TEXT,
         );
     }).toList();
@@ -77,6 +77,9 @@ class PostContentParser implements IHtmlParser<PostContent> {
     element.children.forEach((e) {
       switch (e.localName) {
         case 'a':
+          data = ContentData(
+              data: e.attributes['href'].trim(), type: ContentType.TEXT);
+          break;
         case 'span':
           data = ContentData(
               data: element.text + e.text.trim(), type: ContentType.TEXT);
@@ -87,7 +90,7 @@ class PostContentParser implements IHtmlParser<PostContent> {
               ContentData(data: e.attributes['src'], type: ContentType.IMAGE);
           break;
         default:
-          data = ContentData(data: element.text, type: ContentType.TEXT);
+          data = ContentData(data: element.text.trim(), type: ContentType.TEXT);
           break;
       }
     });
