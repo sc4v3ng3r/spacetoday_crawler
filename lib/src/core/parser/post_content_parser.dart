@@ -78,7 +78,7 @@ class PostContentParser implements IHtmlParser<PostContent> {
       switch (e.localName) {
         case 'a':
           data = ContentData(
-              data: e.attributes['href'].trim(), type: ContentType.TEXT);
+              data: e.attributes['href'].trim(), type: ContentType.LINK);
           break;
         case 'span':
           data = ContentData(
