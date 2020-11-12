@@ -9,6 +9,8 @@ import 'package:html/dom.dart';
 /// Pages like home page and category page should use this class
 /// to parse the posts.
 class PostParser implements IHtmlParser<List<Post>> {
+  String latestPostTitle;
+
   @override
   List<Post> parse(String html) {
     try {
@@ -25,29 +27,36 @@ class PostParser implements IHtmlParser<List<Post>> {
 
   List<Post> _postsExtractor(final Element loopBlogElement) {
     final articles = loopBlogElement?.getElementsByTagName('article');
+    List<Post> postsData = [];
 
-    return articles.map((element) {
+    articles.forEach((element) {
       try {
-        return _postExtractor(element);
+        var post = _postExtractor(element);
+        if (post != null) postsData.add(post);
       } catch (_) {}
-    }).toList();
+    });
+    return postsData;
   }
 
   Post _postExtractor(Element element) {
+    // getting post title
+    final title = _extractTitle(element);
+
+    if (title == this.latestPostTitle)
+      throw "Duplicated Content";
+    else
+      this.latestPostTitle = title;
     // getting post category name
     final categoryName = _extractCategoryName(element);
+
+    // getting post url
+    final contentUrl = _extractPostContentUrl(element);
 
     // getting post Image url
     final imageUrl = _extractImageUrl(element);
 
-    // getting post title
-    final title = _extractTitle(element);
-
     // getting post author
     final author = _extractAuthor(element);
-
-    // getting post url
-    final contentUrl = _extractPostContentUrl(element);
 
     return Post(
       author: author,
