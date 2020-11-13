@@ -1,3 +1,4 @@
+import 'package:spacetoday_crawler/src/core/model/category.dart';
 import 'package:spacetoday_crawler/src/core/model/exception.dart';
 import '../model/post.dart';
 import 'IHtmlParser.dart';
@@ -47,7 +48,7 @@ class PostParser implements IHtmlParser<List<Post>> {
     else
       this.latestPostTitle = title;
     // getting post category name
-    final categoryName = _extractCategoryName(element);
+    final category = _extractCategory(element);
 
     // getting post url
     final contentUrl = _extractPostContentUrl(element);
@@ -60,14 +61,14 @@ class PostParser implements IHtmlParser<List<Post>> {
 
     return Post(
       author: author,
-      categoryName: categoryName,
+      category: category,
       imageUrl: imageUrl,
       contentUrl: contentUrl,
       title: title,
     );
   }
 
-  String _extractCategoryName(Element element) {
+  Category _extractCategory(Element element) {
     try {
       final categoryAnchor = element
           ?.getElementsByTagName('ul')
@@ -76,11 +77,11 @@ class PostParser implements IHtmlParser<List<Post>> {
           ?.first
           ?.getElementsByTagName('a')
           ?.first;
-      return categoryAnchor?.text;
+      return Category(categoryAnchor?.text, categoryAnchor.attributes['href']);
     } catch (_) {
       // print("PostParser::_extractCategoryName couldn't find category name");
     }
-    return "";
+    return null;
   }
 
   String _extractImageUrl(Element element) {

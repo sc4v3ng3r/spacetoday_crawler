@@ -1,4 +1,5 @@
 import './abstract_post.dart';
+import 'category.dart';
 
 class Post extends AbstractPost {
   final String author;
@@ -6,16 +7,16 @@ class Post extends AbstractPost {
       {String contentUrl,
       String imageUrl,
       String title,
-      String categoryName,
+      Category category,
       this.author})
       : super(
           contentUrl: contentUrl,
           imageUrl: imageUrl,
           title: title,
-          categoryName: categoryName,
+          category: category,
         );
 
   @override
   String toString() =>
-      'Title: $title\nCategory: $categoryName\nAuthor: $author\nUrl: $contentUrl\nImageUrl: $imageUrl';
+      'Title: $title\nCategory: $category\nAuthor: $author\nUrl: $contentUrl\nImageUrl: $imageUrl';
 }

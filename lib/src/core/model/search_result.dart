@@ -1,3 +1,5 @@
+import 'package:spacetoday_crawler/src/core/model/category.dart';
+
 import './abstract_post.dart';
 
 class SearchResult extends AbstractPost {
@@ -7,14 +9,14 @@ class SearchResult extends AbstractPost {
       {String contentUrl,
       String imageUrl,
       String title,
-      String categoryName,
+      Category category,
       this.resume})
       : super(
-            categoryName: categoryName,
+            category: category,
             contentUrl: contentUrl,
             imageUrl: imageUrl,
             title: title);
   @override
   String toString() =>
-      'Title: $title\nCategory: $categoryName\nUrl: $contentUrl\nImageUrl: $imageUrl\nResume: $resume';
+      'Title: $title\nCategory: $category\nUrl: $contentUrl\nImageUrl: $imageUrl\nResume: $resume';
 }

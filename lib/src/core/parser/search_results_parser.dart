@@ -1,4 +1,5 @@
 import 'package:html/dom.dart';
+import 'package:spacetoday_crawler/src/core/model/category.dart';
 import 'package:spacetoday_crawler/src/core/model/exception.dart';
 import 'package:spacetoday_crawler/src/core/model/search_result.dart';
 import 'package:spacetoday_crawler/src/core/parser/IHtmlParser.dart';
@@ -39,19 +40,19 @@ class SearchResultsParser implements IHtmlParser<List<SearchResult>> {
     final contentUrl = _extractContentUrl(imageDiv);
 
     return SearchResult(
-        categoryName: category,
+        category: category,
         contentUrl: contentUrl,
         imageUrl: imageUrl,
         resume: resume,
         title: title);
   }
 
-  String _extractCategory(Element categoryDiv) {
+  Category _extractCategory(Element categoryDiv) {
     try {
       final firstCategory = categoryDiv.getElementsByTagName('a').first;
-      return firstCategory.text;
+      return Category(firstCategory.text, firstCategory.attributes['href']);
     } catch (_) {}
-    return "";
+    return null;
   }
 
   String _extractImageUrl(Element imagePostDiv) {
