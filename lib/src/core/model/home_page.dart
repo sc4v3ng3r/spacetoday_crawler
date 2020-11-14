@@ -6,6 +6,7 @@ class HomePage {
   final List<Category> categories;
   final List<MostReadedData> mostReaded;
   final List<Post> posts;
+  final List<Post> highlight;
 
-  HomePage({this.categories, this.mostReaded, this.posts});
+  HomePage({this.categories, this.mostReaded, this.posts, this.highlight});
 }

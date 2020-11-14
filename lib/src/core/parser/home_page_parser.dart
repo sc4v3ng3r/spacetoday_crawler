@@ -19,13 +19,17 @@ class HomePageParser implements IHtmlParser<HomePage> {
       final document = htmlParser.parse(html);
 
       final categories = _extractCategories(document);
+      final highlightImages =
+          _extractHighlightImages(document.getElementById('slideshow_1'));
+
       final posts = this.postsParser.parse(html);
-      final mostViewed = _extractMostViewed(document);
+      final mostViewed = _extractMostReaded(document);
 
       return HomePage(
         categories: categories,
         posts: posts,
         mostReaded: mostViewed,
+        highlight: _generateHighlightPosts(posts, highlightImages),
       );
     } catch (_) {
       throw ParserException(
@@ -33,7 +37,30 @@ class HomePageParser implements IHtmlParser<HomePage> {
     }
   }
 
-  List<MostReadedData> _extractMostViewed(Document document) {
+  List<Post> _generateHighlightPosts(
+      List<Post> allPosts, List<String> highlightImages) {
+    try {
+      return List.generate(highlightImages.length, (index) {
+        final post = allPosts[index];
+        final image = highlightImages[index];
+
+        if (image != null || image.isNotEmpty) post.imageUrl = image;
+        return post;
+      });
+    } catch (_) {}
+    return [];
+  }
+
+  List<String> _extractHighlightImages(Element slideElement) {
+    try {
+      final images = slideElement.getElementsByTagName('img');
+      return images.map((e) => e.attributes['src']).toList();
+    } catch (_) {}
+
+    return [];
+  }
+
+  List<MostReadedData> _extractMostReaded(Document document) {
     try {
       final anchorList = document.getElementsByClassName("wpp-post-title");
       return anchorList.map((e) {
