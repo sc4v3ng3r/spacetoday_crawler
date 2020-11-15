@@ -53,18 +53,33 @@ class HomePageParser implements IHtmlParser<HomePage> {
 
   List<String> _extractHighlightImages(Element slideElement) {
     final imageList = <String>[];
-    try {
-      final images = slideElement.getElementsByTagName('img');
-      String previousImage;
-      images.forEach((e) {
-        var currentImage = e.attributes['src'];
-        if (currentImage != previousImage) {
-          imageList.add(currentImage);
-          previousImage = currentImage;
+    String previousTitle;
+
+    final slideItens = slideElement.getElementsByClassName('slideshow_item');
+    slideItens.forEach((e) {
+      try {
+        final title = e.getElementsByTagName('h4').first;
+        if (title.text != previousTitle) {
+          previousTitle = title.text;
+          final image = e.getElementsByTagName('img').first;
+          imageList.add(image.attributes['src']);
         }
-      });
-      // return images.map((e) => e.attributes['src']).toList();
-    } catch (_) {}
+      } catch (_) {}
+    });
+
+    // try {
+
+    //   // final images = slideElement.getElementsByTagName('img');
+    //   // String previousImage;
+    //   // images.forEach((e) {
+    //   //   var currentImage = e.attributes['src'];
+    //   //   if (currentImage != previousImage) {
+    //   //     imageList.add(currentImage);
+    //   //     previousImage = currentImage;
+    //   //   }
+    //   // });
+    //   // return images.map((e) => e.attributes['src']).toList();
+    // } catch (_) {}
 
     return imageList;
   }
