@@ -5,6 +5,7 @@ export 'src/core/model/exception.dart' show ParserException;
 export 'src/core/model/category.dart' show Category;
 export 'src/core/model/post.dart' show Post;
 export 'src/core/model/post_content.dart' show PostContent;
+export 'src/core/model/content_data.dart' show ContentData, ContentType;
 export 'src/core/model/search_result.dart' show SearchResult;
 export 'src/core/parser/IHtmlParser.dart' show IHtmlParser;
 export 'src/core/parser/post_parser.dart' show PostParser;
