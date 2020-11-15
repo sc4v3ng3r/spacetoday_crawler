@@ -52,12 +52,21 @@ class HomePageParser implements IHtmlParser<HomePage> {
   }
 
   List<String> _extractHighlightImages(Element slideElement) {
+    final imageList = <String>[];
     try {
       final images = slideElement.getElementsByTagName('img');
-      return images.map((e) => e.attributes['src']).toList();
+      String previousImage;
+      images.forEach((e) {
+        var currentImage = e.attributes['src'];
+        if (currentImage != previousImage) {
+          imageList.add(currentImage);
+          previousImage = currentImage;
+        }
+      });
+      // return images.map((e) => e.attributes['src']).toList();
     } catch (_) {}
 
-    return [];
+    return imageList;
   }
 
   List<MostReadedData> _extractMostReaded(Document document) {
