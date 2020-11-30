@@ -1,6 +1,6 @@
 library spacetoday_crawler;
 
-export 'src/spacetoday_api.dart' show SpaceTodayApi;
+export 'src/spacetoday_api.dart' show SpaceTodayApi, SpaceTodayPath;
 export 'src/core/model/exception.dart' show ParserException;
 export 'src/core/model/category.dart' show Category;
 export 'src/core/model/post.dart' show Post;

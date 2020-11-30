@@ -4,6 +4,9 @@ import 'package:spacetoday_crawler/spacetoday_crawler.dart';
 main() async {
   final SpaceTodayApi api = SpaceTodayApi(Dio());
 
+  final data = await api.getAllPosts(page: 5);
+  data.forEach((element) => print);
+
   final homePage = await api.getHomePage();
 
   print("Total categories: ${homePage.categories.length}");

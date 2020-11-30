@@ -29,6 +29,13 @@ class SpaceTodayApi {
     return PostParser().parse(response.data);
   }
 
+  Future<List<Post>> getAllPosts({int page = 1}) async {
+    if (page <= 0) page = 1;
+    final _url = _formatToPage(SpaceTodayPath.basePath, page);
+    final response = await this.dioClient.get(_url);
+    return PostParser().parse(response.data);
+  }
+
   Future<List<SearchResult>> search(final String search) async {
     final url = SpaceTodayPath.basePath + "?s=${_formatSearchQuery(search)}";
     final response = await this.dioClient.get(
